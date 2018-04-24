@@ -82,3 +82,13 @@ class MessageManagerDB extends ManagerDB {
 class CompanyManagerDB extends ManagerDB {
     public static $table_name = "company";
 }
+
+class NewsletterManagerDB extends ManagerDB {
+    public static $table_name = "newsletter";
+
+    public static function subscribe($username) {
+        $user = UserManagerDB::get_by_username($username);
+        $sql = "insert into " . static::$table_name . " (username, email) values($username, '" . $user->email . "')";
+        return self::dosql($sql);
+    }
+}
